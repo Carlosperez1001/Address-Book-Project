@@ -2,6 +2,11 @@
 # Compiled class file
 *.class
 
+# Compile ouput
+target/
+target/*
+target/**/*
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/workspace.xml

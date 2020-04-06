@@ -69,12 +69,12 @@ public class AddressBookGUITest {
 
     @Test
     public void shouldOpenAddDialog() {
-        window.button(withText("Add...")).click();   // Actually fucking works!
-        window.textBox("textToCopy").enterText("Wyatt");
+        window.button(withText("Add...")).click();
+//        window.textBox("textToCopy").enterText("Wyatt");
     }
 
 //    //        window.button("add").click();
-////        window.button(withText("Add...")).click();   // Actually fucking works!
+////        window.button(withText("Add...")).click();   // Actually works!
 //        window.menuItemWithPath("File").click();   // works
 //        window.menuItemWithPath("Exit").click();
 ////        window.menuItemWithPath("File").click();
