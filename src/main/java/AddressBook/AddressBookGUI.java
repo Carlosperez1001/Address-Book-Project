@@ -60,6 +60,8 @@ public class AddressBookGUI extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
         file.setMnemonic('F');
+
+        // Setup event listeners and add to menus
         newItem.addActionListener(e ->
         {
             if (saveItem.isEnabled() && JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, "Are you sure you want to create a new address book? Any unsaved progress will be lost.", "New Address Book", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
