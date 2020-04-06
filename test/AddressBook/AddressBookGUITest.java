@@ -2,7 +2,10 @@ package AddressBook;
 
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
+import org.assertj.swing.finder.DialogFinder;
 import org.assertj.swing.fixture.FrameFixture;
+
+import static java.awt.event.KeyEvent.*;
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
 
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
@@ -70,22 +73,10 @@ public class AddressBookGUITest {
     @Test
     public void shouldOpenAddDialog() {
         window.button(withText("Add...")).click();
-//        window.textBox("textToCopy").enterText("Wyatt");
+        DialogFixture dialog = window.dialog("Person Information");
+        dialog.requireVisible();
+//        dialog.textBox("First Name").enterText("Wyatt");
     }
-
-//    //        window.button("add").click();
-////        window.button(withText("Add...")).click();   // Actually works!
-//        window.menuItemWithPath("File").click();   // works
-//        window.menuItemWithPath("Exit").click();
-////        window.menuItemWithPath("File").click();
-////        window.textBox("textToCopy").enterText("Some random text");
-////        window.menuItem("quitItem").click();
-////        window.button(withText("OK")).click();
-//        window.requireNotVisible();
-////        window.button("copyButton").click();
-////        window.label("copiedText").requireText("Some random text");
-////        window.close();
-
 
     @After
     public void tearDown() {
