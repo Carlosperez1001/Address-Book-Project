@@ -73,9 +73,13 @@ public class AddressBookGUITest {
     @Test
     public void shouldOpenAddDialog() {
         window.button(withText("Add...")).click();
-        DialogFixture dialog = window.dialog("Person Information");
+        DialogFixture dialog = window.dialog();
         dialog.requireVisible();
+        window.button(withText("OK")).click();
+//        dialog.button(JButtonMatcher.withText("OK")).click();
+
 //        dialog.textBox("First Name").enterText("Wyatt");
+////        dialog.close();
     }
 
     @After
