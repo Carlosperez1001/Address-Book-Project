@@ -49,3 +49,6 @@
 *.rar
 
 [Oo]ut
+
+# Mac OS Junk files
+.DS_Store

@@ -32,12 +32,25 @@ class PersonTest {
    * @throws Exception
    */
   @Test
-  void invalidPerson() throws Exception
+  void invalidPerson()
   {
     // Invalid First Name
-    assertThrows(IllegalArgumentException.class,() -> {  testPerson2 = new Person("", "Doe", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");} );
+    try{
+      Throwable exception = assertThrows(
+              IllegalArgumentException.class, () -> {
+                testPerson2 = new Person("", "Doe", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
+              }
+      );
+    }
+    catch (Exception exception) {
+      System.out.println("Exception caught");
+      String expectedMessage = "First name cannot be empty";
+      String actualMessage = exception.getMessage();
+      assertEquals(expectedMessage, actualMessage);
+    }
+
     // Invalid Last Name
-    assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","","123 Main St","Fort Myers","FL","33901","239-555-1212");} );
+//    assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","","123 Main St","Fort Myers","FL","33901","239-555-1212");} );
     // Invalid Address
     //assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","Doe","","Fort Myers","FL","33901","239-555-1212");} );
 
