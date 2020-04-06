@@ -22,5 +22,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.assertj:assertj-core:3.11.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easytesting:fest-util:1.2.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easytesting:fest-reflect:1.4.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-all:1.10.19" level="project" />
   </component>
 </module>
