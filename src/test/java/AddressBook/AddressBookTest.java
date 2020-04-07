@@ -1,18 +1,25 @@
 package AddressBook;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 
 class AddressBookTest {
 
 
     private Person testPerson;
     private Person testPerson2;
+    private Person tempPerson;
     private AddressBook testAddressBook;
 
 
@@ -51,23 +58,19 @@ class AddressBookTest {
     @Test
     void removePersonTest(){
 
+        testAddressBook = mock(AddressBook.class);
+        testPerson = new Person("John","Doe","123 Main St","Fort Myers","FL","33901","239-555-1212");
+        testPerson2 = new Person("Mike","Smith","111 Fourth St","Naples","FL","33333","239-123-4567");
         // Add two persons to AddressBook
         testAddressBook.add(testPerson);
         testAddressBook.add(testPerson2);
 
-        // Check that both persons have been added
-        assertEquals(2, testAddressBook.getRowCount());
-
-        // Remove person from AddressBook
         testAddressBook.remove(0);
-        // Check that person has been removed.
-        assertEquals(1, testAddressBook.getRowCount());
 
-        // Test removal of person that does not exist
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testAddressBook.remove(3);
-        });
-
+        Mockito.when(testAddressBook.get(0)).thenReturn(testPerson2);
+        Mockito.verify(testAddressBook).remove(anyInt());
+        Mockito.verify(testAddressBook, times(2)).add(any(Person.class));
+        Assert.assertEquals(testPerson2, testAddressBook.get(0));
     }
 
     /**
