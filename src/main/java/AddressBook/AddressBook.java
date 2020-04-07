@@ -77,4 +77,8 @@ public class AddressBook extends AbstractTableModel {
     public String getColumnName(int column) {
         return Person.fields[column];
     }
+
+    public List<Person> getList(){
+        return persons;
+    }
 }
