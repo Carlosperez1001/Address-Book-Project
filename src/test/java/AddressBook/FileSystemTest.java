@@ -55,10 +55,10 @@ class FileSystemTest {
     }
   }
 
-  @AfterEach
-  void tearDown() {
-    file.deleteOnExit();
-  }
+//  @AfterEach
+//  void tearDown() {
+//    file.deleteOnExit();
+//  }
 
   @Test
   void readFileTest () {
@@ -75,7 +75,7 @@ class FileSystemTest {
     }
 
 //    System.out.println(readAddressBook.get(0).toString());
-    assertEquals(readAddressBook.get(0).toString(), "Doe, John");
+      assertEquals(readAddressBook.get(0).toString(), "Doe, John");
   }
 
   @Test
@@ -97,6 +97,6 @@ class FileSystemTest {
     }
 
 //    System.out.println(readAddressBook.get(0).toString());
-    assertEquals(readAddressBook.get(0).toString(), "Smith, Mike");
+      assertEquals(readAddressBook.get(0).toString(), "Smith, Mike");
   }
 }

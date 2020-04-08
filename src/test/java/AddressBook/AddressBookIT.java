@@ -22,7 +22,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 
-public class AddressBookIntegrationTest {
+public class AddressBookIT {
 
     @Mock
     private Person testPerson;
