@@ -31,7 +31,7 @@ class PersonTest {
    * Person throws IllegalArgumentException when missing firstName, lastName, or address.
    * @throws Exception
    */
-  @Test
+/*  @Test
   void invalidPerson()
   {
     // Invalid First Name
@@ -56,12 +56,12 @@ class PersonTest {
 
   }
 
-  /**
+  *//**
    * Type: Unit Test
    * Tests for invalid person object.
    * Person throws IllegalArgumentException when missing firstName, lastName, or address.
    * @throws Exception
-   */
+   *//*
   @Test
   void invalidPerson2()
   {
@@ -85,7 +85,7 @@ class PersonTest {
     // Invalid Address
     //assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","Doe","","Fort Myers","FL","33901","239-555-1212");} );
 
-  }
+  }*/
 
 
 

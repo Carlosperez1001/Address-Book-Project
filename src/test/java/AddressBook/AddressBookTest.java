@@ -58,6 +58,25 @@ class AddressBookTest {
     @Test
     void removePersonTest(){
 
+        testPerson = new Person("John","Doe","123 Main St","Fort Myers","FL","33901","239-555-1212");
+        testPerson2 = new Person("Mike","Smith","111 Fourth St","Naples","FL","33333","239-123-4567");
+        // Add two persons to AddressBook
+        testAddressBook.add(testPerson);
+        testAddressBook.add(testPerson2);
+
+        testAddressBook.remove(0);
+
+        Assert.assertEquals(testPerson2, testAddressBook.get(0));
+        Assert.assertEquals(1, testAddressBook.getRowCount());
+    }
+    /**
+     * Type: Unit Test
+     * Tests removing person from AddressBook,
+     * AddressBook.remove(index) should remove person object from AddressBook
+     */
+    @Test
+    void removePersonTestIT(){
+
         testAddressBook = mock(AddressBook.class);
         testPerson = new Person("John","Doe","123 Main St","Fort Myers","FL","33901","239-555-1212");
         testPerson2 = new Person("Mike","Smith","111 Fourth St","Naples","FL","33333","239-123-4567");
@@ -98,6 +117,9 @@ class AddressBookTest {
      */
     @Test
     void clearAddressBook(){
+
+        // Clear empty addressbook
+        testAddressBook.clear();
 
         // Add two persons to AddressBook
         testAddressBook.add(testPerson);
@@ -167,7 +189,7 @@ class AddressBookTest {
      * AddressBook.getPersons() should return array of person objects in AddressBook
      */
     @Test
-    void getPersonsTest(){
+    void getPersonsAsArrayTest(){
         // Create new ArrayList and add two person objects
         List<Person> personsList = new ArrayList<>();
         personsList.add(testPerson);
@@ -180,4 +202,25 @@ class AddressBookTest {
         // Check that returned array is the same.
         assertArrayEquals(personsList.toArray(), testAddressBook.getPersons());
     }
+
+    /**
+     * Type: Unit Test
+     * Tests getList method in AddressBook,
+     * AddressBook.getList() should return list of person objects in AddressBook
+     */
+    @Test
+    void getPersonsasListTest(){
+        // Create new ArrayList and add two person objects
+        List<Person> personsList = new ArrayList<>();
+        personsList.add(testPerson);
+        personsList.add(testPerson2);
+
+        // Add same two person objects to AddressBook
+        testAddressBook.add(testPerson);
+        testAddressBook.add(testPerson2);
+
+        // Check that returned array is the same.
+        assertEquals(personsList, testAddressBook.getList());
+    }
+
 }

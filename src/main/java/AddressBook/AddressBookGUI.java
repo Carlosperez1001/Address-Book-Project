@@ -74,6 +74,7 @@ public class AddressBookGUI extends JFrame {
         openItem.addActionListener(e ->
         {
             final JFileChooser jfc = new JFileChooser();
+            jfc.setName("open_jfc");
             if (JFileChooser.APPROVE_OPTION != jfc.showOpenDialog(this)) {
                 return;
             }
@@ -105,6 +106,7 @@ public class AddressBookGUI extends JFrame {
         saveAsItem.addActionListener(e ->
         {
             final JFileChooser jfc = new JFileChooser();
+            jfc.setName("save_jfc");
             if (JFileChooser.APPROVE_OPTION != jfc.showSaveDialog(this)) {
                 return;
             }
