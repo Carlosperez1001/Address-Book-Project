@@ -34,6 +34,7 @@ import org.assertj.swing.security.NoExitSecurityManagerInstaller;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 
 
