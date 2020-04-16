@@ -3,6 +3,7 @@ package AddressBook;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -12,7 +13,8 @@ import java.util.regex.Pattern;
 
 
 public class AddressBookGUI extends JFrame {
-   
+
+
     private static void createAndShowGUI() {
         AddressBook addressBook = new AddressBook();
         AddressBookController controller = new AddressBookController(addressBook);
@@ -52,6 +54,7 @@ public class AddressBookGUI extends JFrame {
         // Arrange the window controls
         tableRowSorter = new TableRowSorter<>(addressBook);
         nameList = new JTable(addressBook);
+        nameList.setName("name_table");
         nameList.setRowSorter(tableRowSorter);
         nameList.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(nameList);
@@ -136,6 +139,7 @@ public class AddressBookGUI extends JFrame {
         menuBar.add(file);
         menuBar.add(new JSeparator());
         menuBar.add(new JLabel("Search: "));
+        searchTextField.setName("search_field");
         searchTextField.setMaximumSize(new Dimension(15000, 50));
         searchTextField.getDocument().addDocumentListener(new DocumentListener() {
             // Listen to the Document so the list filters immediately
@@ -154,9 +158,8 @@ public class AddressBookGUI extends JFrame {
             public void changedUpdate(DocumentEvent e) {
                 filter();
             }
-
             public void filter() {
-               
+
                 tableRowSorter.setRowFilter(RowFilter.regexFilter("(?iu)" + Pattern.quote(searchTextField.getText())));
             }
         });

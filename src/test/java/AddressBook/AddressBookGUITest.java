@@ -1,43 +1,24 @@
 package AddressBook;
 
 import org.assertj.swing.core.*;
-import org.assertj.swing.core.matcher.DialogMatcher;
 import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.finder.DialogFinder;
-import org.assertj.swing.finder.JFileChooserFinder;
 import org.assertj.swing.fixture.*;
 
-import static java.awt.event.KeyEvent.*;
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
 
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
-import org.assertj.swing.edt.GuiActionRunner;
+
 import org.assertj.swing.fixture.FrameFixture;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import javax.swing.JFrame;
 
-import org.assertj.swing.core.matcher.JButtonMatcher;
-import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
-import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.finder.WindowFinder;
-import org.assertj.swing.fixture.FrameFixture;
-import org.assertj.swing.security.NoExitSecurityManagerInstaller;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
-
-import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.assertj.swing.data.TableCell.row;
 
 
 public class AddressBookGUITest {
@@ -62,6 +43,7 @@ public class AddressBookGUITest {
     public void setUp(){
 
         testAddressBook = new AddressBook();
+
         testAddressBookController = new AddressBookController(testAddressBook);
         AddressBookGUI frame = GuiActionRunner.execute(() ->
                 new AddressBookGUI(testAddressBookController, testAddressBook));
@@ -136,6 +118,71 @@ public class AddressBookGUITest {
         dialog.textBox("phone_field").enterText("123-456-1122");
         window.button(withText("OK")).click();
     }
+
+    @Test
+    public void shouldEditPerson() {
+        window.button(withText("Add...")).click();
+        DialogFixture dialog = window.dialog();
+        dialog.requireVisible();
+        dialog.textBox("firstName_field").enterText("Mike");
+        dialog.textBox("lastName_field").enterText("Smith");
+        window.button(withText("OK")).click();
+        JTableFixture table = window.table("name_table");
+        table.click(row(0).column(0), MouseButton.LEFT_BUTTON);
+        window.button(withText("Edit...")).click();
+        dialog = window.dialog();
+        dialog.textBox("lastName_field").enterText("s");
+        dialog.textBox("address_field").enterText("123 Main St");
+        window.button("pd_ok_button").click();
+    }
+
+    @Test
+    public void shouldDeletePerson() {
+        window.button(withText("Add...")).click();
+        DialogFixture dialog = window.dialog();
+        dialog.requireVisible();
+        dialog.textBox("firstName_field").enterText("Joe");
+        dialog.textBox("lastName_field").enterText("Johnson");
+        window.button(withText("OK")).click();
+        JTableFixture table = window.table("name_table");
+        table.click(row(0).column(0), MouseButton.LEFT_BUTTON);
+        window.button(withText("Delete")).click();
+    }
+
+    @Test
+    public void shouldSearchPerson() {
+        window.button(withText("Add...")).click();
+        DialogFixture dialog = window.dialog();
+        dialog.requireVisible();
+        dialog.textBox("firstName_field").enterText("Joe");
+        dialog.textBox("lastName_field").enterText("Jones");
+        window.button("pd_ok_button").click();
+        window.button(withText("Add...")).click();
+        dialog = window.dialog();
+        dialog.requireVisible();
+        dialog.textBox("firstName_field").enterText("Adam");
+        dialog.textBox("lastName_field").enterText("Adams");
+        window.button("pd_ok_button").click();
+        window.textBox("search_field").enterText("Joe");
+        window.textBox("search_field").deleteText();
+    }
+
+    @Test
+    public void shouldAddThenCancel() {
+        window.button(withText("Add...")).click();
+        DialogFixture dialog = window.dialog();
+        dialog.requireVisible();
+        window.button(withText("Cancel")).click();
+    }
+
+    @Test
+    public void shouldAddEmptyPerson() {
+        window.button(withText("Add...")).click();
+        DialogFixture dialog = window.dialog();
+        dialog.requireVisible();
+        window.button(withText("OK")).click();
+    }
+
 
     @Test
     public void exitWithoutSaving() {
