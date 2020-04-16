@@ -91,6 +91,7 @@ public class PersonDialog extends JDialog {
         // Set up the buttons
         JPanel buttons = new JPanel();
         JButton okButton = new JButton("OK");
+        okButton.setName("pd_ok_button");
         okButton.setMnemonic('O');
         okButton.addActionListener(e ->
         {
