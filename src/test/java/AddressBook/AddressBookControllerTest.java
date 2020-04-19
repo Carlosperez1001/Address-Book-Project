@@ -23,7 +23,10 @@ public class AddressBookControllerTest {
     private FileSystem fileSystem;
     private Connection connection;
 
-
+    /**
+     * Setup FileSystem for open & save test.
+     * Create an AdressBook, Controller, and two Person objects.
+     */
     @BeforeEach
     void setUp() {
         fileSystem = new FileSystem();
@@ -33,6 +36,11 @@ public class AddressBookControllerTest {
         testPerson2 = new Person("Mike", "Smith", "111 Fourth St", "Naples", "FL", "33333", "239-123-4567");
     }
 
+    /**
+     * Type: Unit Test
+     * Tests adding persons to AddressBook,
+     * testAddressBookController.add(person) should add person object to addressbook.
+     */
     @Test
     void addTest() {
 
@@ -45,7 +53,12 @@ public class AddressBookControllerTest {
         assertEquals(testPerson2, testAddressBookController.get(1));
     }
 
-
+    /**
+     * Type: Unit Test
+     * Tests updating persons info in addressbook.
+     * testAddressBookController.set(index, person) should update person object at
+     * specified index.
+     */
     @Test
     void setTest() {
         // Add testPerson to index 0 of addressbook
@@ -56,9 +69,13 @@ public class AddressBookControllerTest {
         testAddressBookController.set(0, testPerson2);
         // Check testPerson2 is now at index 0
         assertEquals(testPerson2, testAddressBookController.get(0));
-
     }
 
+    /**
+     * Type: Unit Test
+     * Tests removing person from AddressBook,
+     * testAdressBookController.remove(index) should remove the person from addressbook.
+     */
     @Test
     void removeTest() {
 
@@ -75,6 +92,11 @@ public class AddressBookControllerTest {
         assertEquals(testPerson2, testAddressBookController.get(0));
     }
 
+    /**
+     * Type: Unit Test
+     * Tests returning person object from addressbook.
+     * testAddressBookController.get(index) should return person object.
+     */
     @Test
     void getTest() {
 
@@ -87,6 +109,11 @@ public class AddressBookControllerTest {
         assertEquals(testPerson2, testAddressBookController.get(1));
     }
 
+    /**
+     * Type: Unit Test
+     * Tests clearing persons from AddressBook,
+     * testAddressBookController.clear() should clear all persons from addressbook.
+     */
     @Test
     void clearTest() {
         // Add two person objects to addressbook
@@ -111,6 +138,12 @@ public class AddressBookControllerTest {
         assertEquals(testAddressBook, testAddressBookController.getModel());
     }
 
+    /**
+     * Type: Unit Test
+     * Should open test address book file & then save it.
+     * testAddressBookController.open(file) should open the testdata.
+     * testAddressBookController.save(file) should save the testdata.
+     */
     @Test
     void openAndSaveTest() throws IOException, SQLException {
 

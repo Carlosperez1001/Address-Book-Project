@@ -13,8 +13,7 @@ import java.util.regex.Pattern;
 
 
 public class AddressBookGUI extends JFrame {
-
-
+    
     private static void createAndShowGUI() {
         AddressBook addressBook = new AddressBook();
         AddressBookController controller = new AddressBookController(addressBook);

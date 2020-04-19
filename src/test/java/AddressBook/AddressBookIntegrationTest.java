@@ -54,6 +54,12 @@ public class AddressBookIntegrationTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    /**
+     * Type: Integration Test
+     * Tests adding person to mock addressbook.
+     * Verify Addressbook.add(Person), Person.add(Person),
+     * and AddressBook.fireTableRowsInserted(int, int) execute.
+     */
     @Test
     void addTest() {
         testAddressBook.add(testPerson);
@@ -66,7 +72,12 @@ public class AddressBookIntegrationTest {
         Mockito.verify(testAddressBook).fireTableRowsInserted(anyInt(), anyInt());
     }
 
-
+    /**
+     * Type: Integration Test
+     * Tests updating person in mock addressbook.
+     * Verify Addressbook.set(int, Person), Person.set(int, Person),
+     * and AddressBook.fireTableRowsUpdated(int, int) execute.
+     */
     @Test
     void setTest() {
         testAddressBook.add(testPerson);
@@ -78,6 +89,12 @@ public class AddressBookIntegrationTest {
         Mockito.verify(testAddressBook).fireTableRowsUpdated(anyInt(), anyInt());
     }
 
+    /**
+     * Type: Integration Test
+     * Tests removing person from mock addressbook.
+     * Verify Addressbook.remove(int),  Person.remove(int),
+     * and AddressBook.fireTableRowsDeleted(int, int) execute.
+     */
     @Test
     void removeTest() {
         testAddressBook.add(testPerson);
@@ -90,6 +107,11 @@ public class AddressBookIntegrationTest {
 
     }
 
+    /**
+     * Type: Integration Test
+     * Tests getting person from mock addressbook.
+     * Verify Addressbook.get(int) returns testPerson object & executes.
+     */
     @Test
     void getTest() {
         testAddressBook.add(testPerson);
@@ -97,6 +119,11 @@ public class AddressBookIntegrationTest {
         Mockito.verify(testAddressBook).get(anyInt());
     }
 
+    /**
+     * Type: Integration Test
+     * Tests clearing persons from mock addressbook.
+     * Verify Addressbook.clear() and Person.size() execute.
+     */
     @Test
     void clearEmptyTest() {
         testAddressBook.clear();

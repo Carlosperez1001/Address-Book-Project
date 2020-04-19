@@ -7,8 +7,6 @@ import org.assertj.swing.fixture.*;
 
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
 
-import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
-
 import org.assertj.swing.fixture.FrameFixture;
 
 import org.junit.After;
@@ -18,12 +16,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 import static org.assertj.swing.data.TableCell.row;
 
 
 public class AddressBookGUITest {
 
-    private Robot robot;
     private FrameFixture window;
     private AddressBook testAddressBook;
     private AddressBookController testAddressBookController;
@@ -35,15 +33,15 @@ public class AddressBookGUITest {
 
     @BeforeAll
     public static void init() {
-//        NoExitSecurityManagerInstaller.installNoExitSecurityManager();
         FailOnThreadViolationRepaintManager.install();
     }
 
+    /**
+     * Create a test addressbook, controller, frame, and window for automated testing.
+     */
     @Before
     public void setUp(){
-
         testAddressBook = new AddressBook();
-
         testAddressBookController = new AddressBookController(testAddressBook);
         AddressBookGUI frame = GuiActionRunner.execute(() ->
                 new AddressBookGUI(testAddressBookController, testAddressBook));
@@ -51,16 +49,28 @@ public class AddressBookGUITest {
         window.show();
     }
 
+    /**
+     * Type: Automated Test
+     * AddressBook window should open.
+     */
     @Test
     public void windowShouldOpen() {
         window.requireVisible();
     }
 
+    /**
+     * Type: Automated Test
+     * Test creation of a new address book.
+     */
     @Test
     public void createNewAddressBook() {
         window.menuItemWithPath("File", "New").click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should add a new person to address book then save as test_db.
+     */
     @Test
     public void shouldSave() {
         window.button(withText("Add...")).click();
@@ -75,6 +85,10 @@ public class AddressBookGUITest {
         window.button(withText("Save")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should open existing address book DB test_db.
+     */
     @Test
     public void shouldOpenFile() {
         window.menuItemWithPath("File", "Open").click();
@@ -82,6 +96,12 @@ public class AddressBookGUITest {
         openDialog.fileNameTextBox().enterText("test_db");
         window.button(withText("Open")).click();
     }
+
+    /**
+     * Type: Automated Test
+     * Should create a new address book after inputting a person.
+     * Should be prompted when creating new address book.
+     */
     @Test
     public void createNewAddressBookAfterInput() {
         window.button(withText("Add...")).click();
@@ -95,6 +115,10 @@ public class AddressBookGUITest {
         window.button(withText("Yes")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should attempt to open a file that does not exist.
+     */
     @Test
     public void shouldOpenFileError() {
         window.menuItemWithPath("File", "Open").click();
@@ -104,6 +128,10 @@ public class AddressBookGUITest {
         window.button(withText("OK")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should add a complete person to the address book.
+     */
     @Test
     public void shouldAddPerson() {
         window.button(withText("Add...")).click();
@@ -119,6 +147,10 @@ public class AddressBookGUITest {
         window.button(withText("OK")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should add a new person then edit an the person within the address book..
+     */
     @Test
     public void shouldEditPerson() {
         window.button(withText("Add...")).click();
@@ -136,6 +168,10 @@ public class AddressBookGUITest {
         window.button("pd_ok_button").click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should add a person to address book then delete them.
+     */
     @Test
     public void shouldDeletePerson() {
         window.button(withText("Add...")).click();
@@ -149,6 +185,10 @@ public class AddressBookGUITest {
         window.button(withText("Delete")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should add two people to address book then search for Joe.
+     */
     @Test
     public void shouldSearchPerson() {
         window.button(withText("Add...")).click();
@@ -167,6 +207,10 @@ public class AddressBookGUITest {
         window.textBox("search_field").deleteText();
     }
 
+    /**
+     * Type: Automated Test
+     * Should open prompt to add person, then cancel.
+     */
     @Test
     public void shouldAddThenCancel() {
         window.button(withText("Add...")).click();
@@ -175,6 +219,10 @@ public class AddressBookGUITest {
         window.button(withText("Cancel")).click();
     }
 
+    /**
+     * Type: Automated Test
+     * Should attempt add empty person to address book.
+     */
     @Test
     public void shouldAddEmptyPerson() {
         window.button(withText("Add...")).click();
@@ -183,7 +231,10 @@ public class AddressBookGUITest {
         window.button(withText("OK")).click();
     }
 
-
+    /**
+     * Type: Automated Test
+     * Should add person to address book then attempt to exit without saving.
+     */
     @Test
     public void exitWithoutSaving() {
         window.button(withText("Add...")).click();
@@ -200,12 +251,5 @@ public class AddressBookGUITest {
     public void tearDown() {
         window.cleanUp();
     }
-    // TODO
-
-    @AfterAll
-    public void afterAll() {
-//        NoExitSecurityManagerInstaller.installNoExitSecurityManager().uninstall();
-    }
-    // TODO
 }
 
