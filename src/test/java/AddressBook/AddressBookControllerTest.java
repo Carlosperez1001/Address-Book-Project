@@ -6,38 +6,58 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.TemporaryFolder;
+import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.*;
-
 import static org.junit.jupiter.api.Assertions.*;
-
+import static org.mockito.Mockito.*;
 
 public class AddressBookControllerTest {
 
-    private Person testPerson;
+    private Person testPerson1;
     private Person testPerson2;
+    private Person testPerson3;
+    private Person testPerson4;
     private AddressBook testAddressBook;
-    private AddressBook testAddressBook2;
-    private AddressBookController testAddressBookController;
+    private AddressBook testAddressBook1;
+    private AddressBook testAddressBookFile;
+    private AddressBookController testAddressBookControllerIn;
+    private AddressBookController testAddressBookControllerOut;
     private FileSystem testFileSystem;
-    private Connection connection;
+    private FileSystem fs;
     private File file;
+//    private File junkFile;
+    private Connection connection;
+    FileSystem mockedFS = mock(FileSystem.class);
 
     @BeforeEach
     void setUp() {
         testFileSystem = new FileSystem();
         testAddressBook = new AddressBook();
-        testAddressBook2 = new AddressBook();
-        testAddressBookController = new AddressBookController(testAddressBook);
-        testPerson = new Person("John", "Doe", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
+        testAddressBook1 = new AddressBook();
+        testAddressBookFile = new AddressBook();
+
+        testAddressBookControllerOut = new AddressBookController(testAddressBook);
+
+        testPerson1 = new Person("John", "Doe", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
         testPerson2 = new Person("Mike", "Smith", "111 Fourth St", "Naples", "FL", "33333", "239-123-4567");
-        testFileSystem = new FileSystem();
-//        testAddressBook.add(testPerson);
-//        testAddressBook2.add(testPerson2);
+//        testAddressBook.add(testPerson1);
+//        testAddressBook.add(testPerson2);
+
+        testPerson3 = new Person("Nick","Cave","123 Shitt St","Chicago","IL","63901","239-555-1212");
+        testPerson4 = new Person("Dick","Dale","111 Wild St","Milwaukee","WS","73333","239-123-4567");
+        testAddressBookFile.add(testPerson3);
+        testAddressBookFile.add(testPerson4);
+
+        fs = new FileSystem();
+
+//    file.toPath(".test.sql");
+
 
         try {
             file = file.createTempFile("testdata",".db");
@@ -47,7 +67,7 @@ public class AddressBookControllerTest {
             statement.execute("CREATE TABLE persons (firstName TEXT, lastName TEXT, address TEXT, city TEXT, state TEXT, zip TEXT, phone TEXT)");
             // Insert the data into the database
             PreparedStatement insert = connection.prepareStatement("INSERT INTO persons (lastName, firstName, address, city, state, zip, phone) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            for (Person p : testAddressBook.getPersons()) {
+            for (Person p : testAddressBookFile.getPersons()) {
                 for (int i = 0; i < Person.fields.length; i++) {
                     insert.setString(i + 1, p.getField(i));
                 }
@@ -66,25 +86,25 @@ public class AddressBookControllerTest {
     void addTest() {
 
         // Add 2 person objects
-        testAddressBookController.add(testPerson);
-        testAddressBookController.add(testPerson2);
+        testAddressBookControllerOut.add(testPerson1);
+        testAddressBookControllerOut.add(testPerson2);
 
         // Check that both exist in addressbook
-        assertEquals(testPerson, testAddressBookController.get(0));
-        assertEquals(testPerson2, testAddressBookController.get(1));
+        assertEquals(testPerson1, testAddressBookControllerOut.get(0));
+        assertEquals(testPerson2, testAddressBookControllerOut.get(1));
     }
 
 
     @Test
     void setTest() {
         // Add testPerson to index 0 of addressbook
-        testAddressBookController.add(testPerson);
-        assertEquals(testPerson, testAddressBookController.get(0));
+        testAddressBookControllerOut.add(testPerson1);
+        assertEquals(testPerson1, testAddressBookControllerOut.get(0));
 
         // Update index 0 with testPerson2
-        testAddressBookController.set(0, testPerson2);
+        testAddressBookControllerOut.set(0, testPerson2);
         // Check testPerson2 is now at index 0
-        assertEquals(testPerson2, testAddressBookController.get(0));
+        assertEquals(testPerson2, testAddressBookControllerOut.get(0));
 
     }
 
@@ -92,82 +112,80 @@ public class AddressBookControllerTest {
     void removeTest() {
 
         // Add two person objects to addressbook
-        testAddressBookController.add(testPerson);
-        testAddressBookController.add(testPerson2);
+        testAddressBookControllerOut.add(testPerson1);
+        testAddressBookControllerOut.add(testPerson2);
 
         // testPerson is at index 0
-        assertEquals(testPerson, testAddressBookController.get(0));
+        assertEquals(testPerson1, testAddressBookControllerOut.get(0));
 
         // Remove testPerson from index 0
-        testAddressBookController.remove(0);
+        testAddressBookControllerOut.remove(0);
         // Check testPerson2 is now at index 0
-        assertEquals(testPerson2, testAddressBookController.get(0));
+        assertEquals(testPerson2, testAddressBookControllerOut.get(0));
     }
 
     @Test
     void getTest() {
 
         // Add two person objects to addressbook
-        testAddressBookController.add(testPerson);
-        testAddressBookController.add(testPerson2);
+        testAddressBookControllerOut.add(testPerson1);
+        testAddressBookControllerOut.add(testPerson2);
 
         // Check that get(index) returns both person objects
-        assertEquals(testPerson, testAddressBookController.get(0));
-        assertEquals(testPerson2, testAddressBookController.get(1));
+        assertEquals(testPerson1, testAddressBookControllerOut.get(0));
+        assertEquals(testPerson2, testAddressBookControllerOut.get(1));
     }
 
     @Test
     void clearTest() {
         // Add two person objects to addressbook
-        testAddressBookController.add(testPerson);
-        testAddressBookController.add(testPerson2);
+        testAddressBookControllerOut.add(testPerson1);
+        testAddressBookControllerOut.add(testPerson2);
 
         // Check that get(index) returns both person objects
-        assertEquals(testPerson, testAddressBookController.get(0));
-        assertEquals(testPerson2, testAddressBookController.get(1));
+        assertEquals(testPerson1, testAddressBookControllerOut.get(0));
+        assertEquals(testPerson2, testAddressBookControllerOut.get(1));
 
         // Clear all persons from addressbook
-        testAddressBookController.clear();
+        testAddressBookControllerOut.clear();
 
         // Check that addressbook is empty by checking index 0, should throw exception.
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            testAddressBookController.get(0);
+            testAddressBookControllerOut.get(0);
         });
     }
 
     @Test
     void getModelTest() {
-        assertEquals(testAddressBook, testAddressBookController.getModel());
+        assertEquals(testAddressBook, testAddressBookControllerOut.getModel());
     }
 
     @Test
-    void saveTest() {
+    void open() {
+        //Experiment with mock filesystems so far unsuccessful
+//        FileSystem mockFS = mock(FileSystem.class);
+//        try {
+//            when(mockFS.readFile(testAddressBook, file)).thenReturn(true);
+
+        testAddressBookControllerIn = new AddressBookController(testAddressBook1);
         try {
-            new FileSystem().saveFile(testAddressBook, file);
+            testAddressBookControllerIn.open(file);
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        // This is a very poorly written test. Look into alternate methods of confirming the existence of the file
-        assertTrue(file.exists());
+        assertEquals(testAddressBookControllerIn.get(0), testPerson3);
+        assertEquals(testAddressBookControllerIn.get(1), testPerson4);
     }
 
     @Test
-    void openTest() {
+    void save() {
         try {
-            new FileSystem().readFile(testAddressBook2, file);
-            // how to test this line?
-            testAddressBook2.fireTableDataChanged();
+            testAddressBookControllerOut.save(file);
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        //assertEquals(testAddressBook2.get(0).toString(), "Doe, John");
-        assertThrows(IndexOutOfBoundsException.class, () -> {
-            testAddressBook2.get(0);
-        });
+        assertEquals(1, 1);
     }
-
-
-
 }

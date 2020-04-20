@@ -28,7 +28,7 @@ class PersonTest {
   /**
    * Type: Unit Test
    * Tests for invalid person object.
-   * Person throws IllegalArgumentException when missing firstName, lastName, or address.
+   * Person throws IllegalArgumentException when firstName is empty.
    * @throws Exception
    */
   @Test
@@ -48,13 +48,87 @@ class PersonTest {
       String actualMessage = exception.getMessage();
       assertEquals(expectedMessage, actualMessage);
     }
-
-    // Invalid Last Name
-//    assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","","123 Main St","Fort Myers","FL","33901","239-555-1212");} );
-    // Invalid Address
-    //assertThrows(IllegalArgumentException.class,() -> { testPerson3 = new Person("John","Doe","","Fort Myers","FL","33901","239-555-1212");} );
-
   }
+
+  /**
+   * Type: Unit Test
+   * Tests for invalid person object.
+   * Person throws IllegalArgumentException when missing firstName.
+   * @throws Exception
+   */
+  @Test
+  void invalidPersonNullFirst()
+  {
+    // Invalid First Name
+    try{
+      Throwable exception = assertThrows(
+              IllegalArgumentException.class, () -> {
+                testPerson2 = new Person(null, "Doe", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
+              }
+      );
+    }
+    catch (Exception exception) {
+      System.out.println("Exception caught");
+      String expectedMessage = "First name cannot be empty";
+      String actualMessage = exception.getMessage();
+      assertEquals(expectedMessage, actualMessage);
+    }
+  }
+
+
+  /**
+   * Type: Unit Test
+   * Tests for invalid person object.
+   * Person throws IllegalArgumentException when missing firstName, lastName, or address.
+   * @throws Exception
+   */
+  @Test
+  void invalidPerson2()
+  {
+    // Invalid First Name
+    try{
+      Throwable exception = assertThrows(
+              IllegalArgumentException.class, () -> {
+                testPerson2 = new Person("John", "", "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
+              }
+      );
+    }
+    catch (Exception exception) {
+      System.out.println("Exception caught");
+      String expectedMessage = "Last name cannot be empty";
+      String actualMessage = exception.getMessage();
+      assertEquals(expectedMessage, actualMessage);
+    }
+  }
+
+
+  /**
+   * Type: Unit Test
+   * Tests for invalid person object.
+   * Person throws IllegalArgumentException when missing lastName.
+   * @throws Exception
+   */
+  @Test
+  void invalidPersonNullLast()
+  {
+    // Invalid First Name
+    try{
+      Throwable exception = assertThrows(
+              IllegalArgumentException.class, () -> {
+                testPerson2 = new Person("John", null, "123 Main St", "Fort Myers", "FL", "33901", "239-555-1212");
+              }
+      );
+    }
+    catch (Exception exception) {
+      System.out.println("Exception caught");
+      String expectedMessage = "First name cannot be empty";
+      String actualMessage = exception.getMessage();
+      assertEquals(expectedMessage, actualMessage);
+    }
+  }
+
+
+
 
   /**
    * Type: Unit Test
