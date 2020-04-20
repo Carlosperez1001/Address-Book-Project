@@ -28,11 +28,11 @@ public class Person {
 
     public Person(String firstName, String lastName, String address, String city, String state, String zip, String phone) {
         if (firstName == null || firstName.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Please Enter a first name.", "Error", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Please Enter a first name.", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw new IllegalArgumentException("First name cannot be empty");
         }
         if (lastName == null || lastName.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Please Enter a last name", "Error", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Please Enter a last name", "Error", JOptionPane.INFORMATION_MESSAGE);
             throw new IllegalArgumentException("Last name cannot be empty");
         }
 

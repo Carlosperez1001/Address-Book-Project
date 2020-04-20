@@ -98,6 +98,10 @@ class AddressBookTest {
      */
     @Test
     void clearAddressBook(){
+        // Clear empty or null address book
+        AddressBook tempAddressBook = testAddressBook;
+        testAddressBook.clear();
+        assertEquals(tempAddressBook, testAddressBook);
 
         // Add two persons to AddressBook
         testAddressBook.add(testPerson);
@@ -179,5 +183,21 @@ class AddressBookTest {
 
         // Check that returned array is the same.
         assertArrayEquals(personsList.toArray(), testAddressBook.getPersons());
+    }
+
+    @Test
+    void getList() {
+        // Create new ArrayList and add two person objects
+        List<Person> personsList = new ArrayList<>();
+        personsList.add(testPerson);
+        personsList.add(testPerson2);
+
+        // Add same two person objects to AddressBook
+        testAddressBook.add(testPerson);
+        testAddressBook.add(testPerson2);
+
+        // Check that returned array is the same.
+//        assertArrayEquals(personsList.toArray(), testAddressBook.getPersons());
+        assertEquals(testAddressBook.getList(), personsList);
     }
 }

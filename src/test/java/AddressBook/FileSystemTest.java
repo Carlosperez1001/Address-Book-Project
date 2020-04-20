@@ -1,5 +1,6 @@
 package AddressBook;
 
+import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,8 @@ import org.mockito.Mock;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,6 +21,7 @@ class FileSystemTest {
   private AddressBook testAddressBook2;
   private Connection connection;
   private File file;
+  private File junkFile;
   private FileSystem fs;
 
   @BeforeEach
@@ -34,6 +38,7 @@ class FileSystemTest {
 
     try {
       file = file.createTempFile("testdata",".db");
+      junkFile = junkFile.createTempFile("junkdata",".db");
       connection = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
       Statement statement = connection.createStatement();
       statement.execute("DROP TABLE IF EXISTS persons");
@@ -52,6 +57,18 @@ class FileSystemTest {
     catch (Exception e)
     {
       System.out.println("Exception caught. Setup failed.");
+    }
+
+    try {
+      FileWriter myWriter = new FileWriter(junkFile);
+      myWriter.write("Beware the Jabberwock, my son! \n" +
+              "      The jaws that bite, the claws that catch! \n" +
+              "Beware the Jubjub bird, and shun \n" +
+              "      The frumious Bandersnatch!");
+      myWriter.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
     }
   }
 
@@ -76,6 +93,21 @@ class FileSystemTest {
 
 //    System.out.println(readAddressBook.get(0).toString());
       assertEquals(readAddressBook.get(0).toString(), "Doe, John");
+  }
+
+  @Test
+  void readNoFileTest() {
+    file.delete();
+    assertThrows(FileNotFoundException.class, () -> {
+      fs.readFile(testAddressBook2,file);
+    });
+  }
+
+  @Test
+  void readBadFileTest() {
+    assertThrows(SQLException.class, () -> {
+      fs.readFile(testAddressBook2,junkFile);
+    });
   }
 
   @Test
