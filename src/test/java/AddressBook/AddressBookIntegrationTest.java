@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +32,15 @@ public class AddressBookIntegrationTest {
 
     @Mock
     private List<Person> testList;
+
+    @Mock
+    private Connection connection;
+
+    @Mock
+    private File file;
+
+    @Mock
+    private FileSystem fileSystem;
 
     @Spy
     @InjectMocks

@@ -24,7 +24,7 @@ class PersonTest {
   void setUp() {
     testPerson = new Person("John","Doe","123 Main St","Fort Myers","FL","33901","239-555-1212");
   }
-  
+
   /**
    * Type: Unit Test
    * Tests getFirstName method,

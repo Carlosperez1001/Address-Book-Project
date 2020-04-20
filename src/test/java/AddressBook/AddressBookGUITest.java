@@ -5,6 +5,7 @@ import org.assertj.swing.edt.FailOnThreadViolationRepaintManager;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.*;
 
+import static java.awt.event.KeyEvent.*;
 import static org.assertj.swing.core.matcher.JButtonMatcher.withText;
 
 import org.assertj.swing.fixture.FrameFixture;
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 
 import static org.assertj.swing.data.TableCell.row;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class AddressBookGUITest {
@@ -25,6 +27,7 @@ public class AddressBookGUITest {
     private FrameFixture window;
     private AddressBook testAddressBook;
     private AddressBookController testAddressBookController;
+    private Person testPerson;
 
     @BeforeClass
     public static void setUpOnce() {
@@ -43,6 +46,7 @@ public class AddressBookGUITest {
     public void setUp(){
         testAddressBook = new AddressBook();
         testAddressBookController = new AddressBookController(testAddressBook);
+        testPerson = new Person("John","Doe","123 Main St","Fort Myers","FL","33901","239-555-1212");
         AddressBookGUI frame = GuiActionRunner.execute(() ->
                 new AddressBookGUI(testAddressBookController, testAddressBook));
         window = new FrameFixture(frame);
@@ -56,6 +60,7 @@ public class AddressBookGUITest {
     @Test
     public void windowShouldOpen() {
         window.requireVisible();
+        window.menuItemWithPath("File", "Exit");
     }
 
     /**
@@ -143,7 +148,7 @@ public class AddressBookGUITest {
         dialog.textBox("city_field").enterText("Naples");
         dialog.textBox("state_field").enterText("FL");
         dialog.textBox("zip_field").enterText("33333");
-        dialog.textBox("phone_field").enterText("123-456-1122");
+        dialog.textBox("phone_field").enterText("1234561122");
         window.button(withText("OK")).click();
     }
 
@@ -183,6 +188,7 @@ public class AddressBookGUITest {
         JTableFixture table = window.table("name_table");
         table.click(row(0).column(0), MouseButton.LEFT_BUTTON);
         window.button(withText("Delete")).click();
+        window.button(withText("Delete")).click();
     }
 
     /**
@@ -200,11 +206,11 @@ public class AddressBookGUITest {
         window.button(withText("Add...")).click();
         dialog = window.dialog();
         dialog.requireVisible();
-        dialog.textBox("firstName_field").enterText("Adam");
-        dialog.textBox("lastName_field").enterText("Adams");
+        dialog.textBox("firstName_field").enterText("Jess");
+        dialog.textBox("lastName_field").enterText("James");
         window.button("pd_ok_button").click();
         window.textBox("search_field").enterText("Joe");
-        window.textBox("search_field").deleteText();
+        window.textBox("search_field").pressAndReleaseKeys(VK_BACK_SPACE, VK_BACK_SPACE, VK_E, VK_S);
     }
 
     /**
@@ -228,6 +234,7 @@ public class AddressBookGUITest {
         window.button(withText("Add...")).click();
         DialogFixture dialog = window.dialog();
         dialog.requireVisible();
+        window.button(withText("OK")).click();
         window.button(withText("OK")).click();
     }
 

@@ -95,6 +95,26 @@ public class PersonDialog extends JDialog {
         okButton.setMnemonic('O');
         okButton.addActionListener(e ->
         {
+            // Check ZIP Input
+            if(firstName.getText().isEmpty() || lastName.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "First & last name required. Can not be empty.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            // Check ZIP Input
+            if(!zip.getText().matches(("[0-9]{5}")) && !zip.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Zip code invalid, must contain 5 digits.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            // Check phone input, numbers only
+            if(!phone.getText().matches("[0-9]+") && !phone.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Phone number invalid, can not contain letters.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            // Check state input
+            if(state.getText().matches("[A-Z_]{2}") && !state.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "State must be 2 character code.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             result = Result.OK;
             setVisible(false);
         });

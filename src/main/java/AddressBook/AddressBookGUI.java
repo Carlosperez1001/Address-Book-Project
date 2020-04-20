@@ -96,13 +96,6 @@ public class AddressBookGUI extends JFrame {
                 saveAsItem.doClick();
                 return;
             }
-            FileSystem fs = new FileSystem();
-            try {
-                controller.save(currentFile);
-                saveItem.setEnabled(false);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error saving the file: " + ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
-            }
         });
         file.add(saveItem);
         saveAsItem.addActionListener(e ->
@@ -119,7 +112,6 @@ public class AddressBookGUI extends JFrame {
             if (currentFile.exists() && JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, "Are you sure you want to overwrite this file?", "Are you sure?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                 return;
             }
-            saveItem.doClick();
         });
         file.add(saveAsItem);
         file.add(new JSeparator());
